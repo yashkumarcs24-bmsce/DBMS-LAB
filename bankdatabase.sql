@@ -82,9 +82,11 @@ INSERT INTO loan VALUES
 (5,'SBI_Jantarmantar',5000);
 select * from loan;
 
+-- Query 3
 SELECT branch_name, (assets / 100000.0) AS "assets in lakhs"
 FROM branch;
 
+-- Query 4
 SELECT d.customer_name, b.branch_name
 FROM depositor d
 JOIN bankaccount a ON d.accno = a.accno
@@ -92,12 +94,14 @@ JOIN branch b ON a.branch_name = b.branch_name
 GROUP BY d.customer_name, b.branch_name
 HAVING COUNT(d.accno) >= 2;
 
+-- Query 5
 CREATE VIEW branch_total_loans AS
 SELECT branch_name, SUM(amount) AS total_loan_amount
 FROM loan
 GROUP BY branch_name;
 SELECT * FROM branch_total_loans;
 
+-- Query 6
 SELECT d.customer_name
 FROM depositor d
 JOIN bankaccount b ON d.accno = b.accno
@@ -106,6 +110,7 @@ WHERE br.branch_city = 'Delhi'
 GROUP BY d.customer_name
 HAVING COUNT(DISTINCT b.branch_name) = (SELECT COUNT(*) FROM branch WHERE branch_city = 'Delhi');
 
+-- Query 7
 CREATE TABLE borrower (
     customer_name VARCHAR(30),
     loan_number INT,
@@ -125,12 +130,14 @@ FROM borrower b
 LEFT JOIN depositor d ON b.customer_name = d.customer_name
 WHERE d.customer_name IS NULL;
 
+-- Query 8
 SELECT DISTINCT d.customer_name
 FROM depositor d
 JOIN bankaccount b ON d.accno = b.accno
 JOIN loan l ON b.branch_name = l.branch_name
 WHERE (b.branch_name = 'SBI_Chamrajpet' OR b.branch_name = 'SBI_ResidencyRoad');
 
+-- Query 9
 SELECT branch_name
 FROM branch
 WHERE assets > ALL (
@@ -139,6 +146,7 @@ WHERE assets > ALL (
     WHERE branch_city = 'Bangalore'
 );
 
+-- Query 10
 DELETE FROM bankaccount
 WHERE branch_name IN (
     SELECT branch_name
@@ -147,6 +155,7 @@ WHERE branch_name IN (
 );
 SELECT * FROM bankaccount;
 
+-- Query 11
 UPDATE bankaccount
 SET balance = balance * 1.05;
 SET SQL_SAFE_UPDATES = 0;
