@@ -89,3 +89,49 @@ WHERE EMPNO NOT IN (SELECT EMPNO FROM INCENTIVES);
 SELECT E.ENAME, E.EMPNO, D.DNAME, A.JOB_ROLE, D.DLOC AS DEPT_LOCATION, P.PLOC AS PROJECT_LOCATION
 FROM EMPLOYEE E, DEPT D, ASSIGNED_TO A, PROJECT P
 WHERE E.DEPTNO = D.DEPTNO AND E.EMPNO = A.EMPNO AND A.PNO = P.PNO AND D.DLOC = P.PLOC;
+
+Select e.Ename, d.DName, d.DLoc as Dept_Location
+From Employee e, Dept d
+Where e.deptno=d.deptno;
+
+SELECT E.EName, E.EmpNo
+FROM Employee E, Assigned_to a
+WHERE A.EmpNO=e.Empno AND A.PNo IS NULL;
+
+Select D.DName, AVG(E.Sal) As Average_Salary, MAX(E.Sal) As Maximum_Salary
+From Dept D, Employee E
+Where D.DeptNo=E.DeptNo
+Group by DName;
+
+Select E.EName, SUM(I.Incentive_amount) As Total_Incentives_Earned
+From Employee E, Incentives I
+Where E.EmpNo=I.EmpNo
+Group By E.Ename
+Order by Total_Incentives_Earned;
+
+Select E.EName, E.EmpNo, A.Job_Role
+From Employee E, Assigned_to A, Project P 
+Where E.EmpNo=A.EmpNo AND A.PNo=P.PNo AND P.PName="Website Revamp";
+
+Select D.DName, D.DeptNo
+From Dept D, Employee E
+Where E.DeptNo=D.DeptNo AND E.EmpNo IS NULL;
+
+Update Employee
+Set Mgr_No=204
+Where EmpNo in (201,202,203);
+Update Employee
+Set Mgr_No=206
+Where EmpNo in (204,205);
+
+Select M.EName As Manager_Name, Count(E.EmpNo) As Direct_Report_Count
+From Employee E, Employee M
+Where E.Mgr_No=M.EmpNo
+Group By M.EName
+Order By Direct_Report_Count;
+
+Select E.Ename, Count(A.Pno) As Project_Count
+From Employee E, Assigned_to A 
+Where E.EmpNo=A.EmpNo
+Group By E.Ename
+Having Count(A.Pno)>1;
