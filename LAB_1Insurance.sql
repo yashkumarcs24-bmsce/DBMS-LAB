@@ -128,4 +128,5 @@ SELECT MAX(DAMAGE_AMOUNT)
 FROM PARTICIPATED;
 
 -- Query 11
+
 select * from car order by year ASC;
